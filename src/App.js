@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import './App.css';
 
+
 const App = () => {
   return (
     <div className="container">
@@ -9,8 +10,22 @@ const App = () => {
     </div>
   )
 }
+
 const ToDoForm = () => {
-  const todolist = [];
+  //再度レンダリングされた後、ステートの値が更新された後のタイミングでローカルストレージに上書きするようにしてやると一回ですむ。
+  const componentDidUpdate = (() => {
+    saveLocal(todos)
+  })
+  const saveLocal = (todos) => {
+      todos = JSON.stringify(todos);
+      localStorage.setItem("todos", todos);
+  }
+  let todolist = []
+  if (localStorage.todos) {
+    todolist = JSON.parse(localStorage.getItem('todos'))
+  } else {
+    todolist = [];
+  }
   // todo用のstate(配列)
   const [todos, setTodo] = useState(todolist);
   //タスク用のstate
@@ -18,12 +33,13 @@ const ToDoForm = () => {
   const createTask = (e) => {
     setTask(e.target.value)
   }
-  const addTask = () => {
+  const addTask = (callback) => {
     if (task === '') {
       return
     } else {
-      setTodo((prevTodos) => [...prevTodos, { title: task, flg: false }]);
-      setTask("");
+      setTodo((prevTodos) => [...prevTodos, { title: task, flg: false }])
+      callback(todos)
+      setTask("")
     }
   }
   const checkTask = index => {
@@ -60,8 +76,8 @@ const ToDoForm = () => {
           </li>
         ))}
       </ul>
-      <input type="text" value={task} onChange={createTask} />
-      <button onClick={addTask}>追加</button>
+      <input type="text" value={task} onChange={createTask}/>
+      <button onClick={(() => { addTask(componentDidUpdate) })}>追加</button>
     </React.Fragment>
   );
 }
