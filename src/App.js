@@ -1,16 +1,15 @@
-import React,{ useEffect } from 'react';
+import React,{ useEffect,useState } from 'react';
 import { useSelector,useDispatch } from 'react-redux';
-import { connect } from 'react-redux';
-import { fetchData, inputData , addToTodoList, doneTodo, deleteTodo } from './actions';
+import { fetchData , addToTodoList, doneTodo, deleteTodo } from './actions';
 
 //useSlector
 const todosSelector = state => state.todo.todos;
-const valueSelector = state => state.todo.value;
 
-const App = (props) => {
+const App = () => {
   const dispatch = useDispatch()
   const todos = useSelector(todosSelector)
-  const value = useSelector(valueSelector)
+  const [val,setVal] = useState('')
+
   //マウント時に実行
   useEffect(() => {
     if (localStorage.data) {
@@ -19,6 +18,12 @@ const App = (props) => {
       dispatch(fetchData(data))
     }
   }, [])
+
+  //todosに変化があったときのみinputタグ内のテキストを削除
+  useEffect(() => {
+    setVal('')
+  }, [todos])
+  
   return (
     <React.Fragment>
       <h2>ToDoリスト</h2>
@@ -40,26 +45,11 @@ const App = (props) => {
           </div>
         )
       )}
-        <input type="text" onChange={((e) => { dispatch(inputData(e)) })} value={value}/>
-        <button onClick={(() => { dispatch(addToTodoList()) })}>追加</button>
+        <input type="text" onChange={((e)=>{setVal(e.target.value)})} value={ val }/>
+        <button onClick={(() => { dispatch(addToTodoList(val)) })}>追加</button>
       </div>
     </React.Fragment>
   );  
 }
 
-
-// const mapStateToProps = state => ({
-//   todos: state.todo.todos,
-//   value: state.todo.value
-// })
-
-// const mapDispatchToProps = dispatch => ({
-//   fetchData:(todos)=>dispatch(fetchData(todos)),
-//   inputData:(e)=>dispatch(inputData(e)),
-//   addToTodoList:()=>dispatch(addToTodoList()),
-//   doneTodo:(index)=>dispatch(doneTodo(index)),
-//   deleteTodo:(index)=>dispatch(deleteTodo(index)),
-// })
-
 export default App;
-//connect(mapStateToProps, mapDispatchToProps)(
