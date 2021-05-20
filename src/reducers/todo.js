@@ -1,4 +1,4 @@
-import { INPUTDATA, ADDTOTODOLIST,DONETODO } from "../actions";
+import { INPUTDATA, ADDTOTODOLIST,DONETODO,DELETETODO } from "../actions";
 
 //一番最初にreducerが呼ばれたときはundefinedが入っているので、以下の変数を初期値として入れておいてやる必要がある。
 //2回目からはすでにstateに値が入っているのでそのstateが適応される。
@@ -16,17 +16,24 @@ export default(state = initialState, action) => {
             }
         case ADDTOTODOLIST:
             return {
-                value:state.value,
+                value:'',
                 todos: [...state.todos, { id: state.todos.length, value: state.value, flg:false }]
             }
         case DONETODO:
-            let index = action.index;
-            let array = [...state.todos]
-            array[index].flg = !array[index].flg;
-            console.log(array)
+            let index1 = action.index;
+            let array1 = [...state.todos]
+            array1[index1].flg = !array1[index1].flg;
             return {
                 value: state.value,
-                todos:[...array]
+                todos:[...array1]
+            }
+        case DELETETODO:
+            let index2 = action.index;
+            let array2 = [...state.todos]
+            array2.splice(index2,1)
+            return {
+                value: state.value,
+                todos:[...array2]
             }
         default:
             return state
