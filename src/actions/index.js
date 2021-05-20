@@ -1,3 +1,4 @@
+export const FETCHDATA = 'fetchData'
 export const INPUTDATA = 'inputData'
 export const ADDTOTODOLIST = 'addToTodoList'
 export const DONETODO = 'doneTodo'
@@ -17,4 +18,8 @@ export const doneTodo = (index) => ({
 export const deleteTodo = (index) => ({
         type: DELETETODO,
         index:index
+})
+export const fetchData = (todos) => ({
+        type: FETCHDATA,
+        todos:todos
 })

@@ -1,8 +1,16 @@
-import React from 'react';
+import React,{ useEffect } from 'react';
 import { connect } from 'react-redux';
-import { inputData , addToTodoList, doneTodo, deleteTodo } from './actions';
+import { fetchData, inputData , addToTodoList, doneTodo, deleteTodo } from './actions';
 
 const App = (props) => {
+  //マウント時に実行
+  useEffect(() => {
+    if (localStorage.data) {
+      let data = localStorage.getItem('data')
+      data = JSON.parse(data)
+      props.fetchData(data)
+    }
+  }, [])
   return (
     <React.Fragment>
       <h2>ToDoリスト</h2>
@@ -37,6 +45,7 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => ({
+  fetchData:(todos)=>dispatch(fetchData(todos)),
   inputData:(e)=>dispatch(inputData(e)),
   addToTodoList:()=>dispatch(addToTodoList()),
   doneTodo:(index)=>dispatch(doneTodo(index)),
