@@ -1,24 +1,29 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { countPlus , countMinus } from './actions';
+import { inputData , addToTodoList } from './actions';
 
 const App = (props) => {
   return (
     <React.Fragment>
-      <p>現在の数字は{props.val}</p>
-      <button onClick={props.countPlus}>+1</button>
-      <button onClick={props.countMinus}>-1</button>
+      {props.todos.map((todo,index) => (
+        <div key={index}>
+          <p>ID:{todo.id} テキスト：{todo.value}</p>
+          <button>削除</button>
+        </div>
+      ))}
+      <input type="text" onChange={props.inputData}/>
+      <button onClick={props.addToTodoList}>追加</button>
     </React.Fragment>
   );  
 }
 
 const mapStateToProps = state => ({
-  val: state.counter.val
+  todos: state.todo.todos
 })
 
 const mapDispatchToProps = dispatch => ({
-  countPlus:()=>dispatch(countPlus()),
-  countMinus:()=>dispatch(countMinus())
+  inputData:(e)=>dispatch(inputData(e)),
+  addToTodoList:()=>dispatch(addToTodoList())
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);

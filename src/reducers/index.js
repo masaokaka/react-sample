@@ -2,6 +2,6 @@
 //統合するためのcombineReducersを呼び出し。(yarnでインストールしていることが前提)
 import { combineReducers } from 'redux'
 //結合するjsファイルをインポート
-import counter from './counter'
+import todo from './todo'
 
-export default combineReducers({counter})//複数あれば[,]でくぎる
+export default combineReducers({todo})//複数あれば[,]でくぎる

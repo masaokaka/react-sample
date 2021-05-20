@@ -1,9 +1,10 @@
-export const COUNTPLUS = 'countPlus'
-export const COUNTMINUS = 'countMinus'
+export const INPUTDATA = 'inputData'
+export const ADDTOTODOLIST = 'addToTodoList'
 
-export const countPlus = () => ({
-        type:COUNTPLUS
+export const inputData = (e) => ({
+        type: INPUTDATA,
+        input:e.target.value
 })
-export const countMinus = () => ({
-        type:COUNTMINUS
+export const addToTodoList = () => ({
+        type:ADDTOTODOLIST
 })
