@@ -1,6 +1,10 @@
 import React,{ useEffect,useState } from 'react';
 import { useSelector,useDispatch } from 'react-redux';
 import { fetchData , addToTodoList, doneTodo, deleteTodo } from './actions';
+import { IconButton,Container,TextField,Checkbox,Grid} from '@material-ui/core'
+import { Table,TableBody,TableCell,TableContainer,TableHead,TableRow,Paper} from '@material-ui/core'
+import { AddCircle,Delete } from '@material-ui/icons';
+
 
 //useSlector
 const todosSelector = state => state.todo.todos;
@@ -25,30 +29,48 @@ const App = () => {
   }, [todos])
   
   return (
-    <React.Fragment>
+    <Container maxWidth="Md">
       <h2>ToDoリスト</h2>
-      <div className="container">
-      {todos.map((todo, index) =>
-        todo.flg ? (
-          <div key={index}>
-            <del>
-              <span>ID:{todo.id} テキスト：{todo.value}</span>
-              <input type="checkbox" onChange={(() => { dispatch(doneTodo(index)) })} checked={todo.flg}/>
-              <button onClick={(() => { dispatch(deleteTodo(index)) })}>削除</button>
-            </del>
-          </div>
-        ) : (
-          <div key={index}>
-            <span>ID:{todo.id} テキスト：{todo.value}</span>
-              <input type="checkbox" onChange={(() => { dispatch(doneTodo(index)) })} checked={todo.flg}/>
-              <button onClick={(() => { dispatch(deleteTodo(index)) })}>削除</button>
-          </div>
-        )
-      )}
-        <input type="text" onChange={((e)=>{setVal(e.target.value)})} value={ val }/>
-        <button onClick={(() => { dispatch(addToTodoList(val)) })}>追加</button>
-      </div>
-    </React.Fragment>
+      {todos.length!==0 &&
+      <TableContainer component={Paper}>
+        <Table>
+        <TableHead>
+          <TableRow>
+            <TableCell align="center">ID</TableCell>
+            <TableCell align="center">テキスト</TableCell>
+            <TableCell align="center">機能</TableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
+        {todos.map((todo, index) =>
+          <TableRow key={index}>
+            <TableCell align="center">{todo.id}</TableCell>
+            {todo.flg ? 
+            <TableCell align="center"><del>{todo.value}</del></TableCell>
+            :
+            <TableCell align="center"><span>{todo.value}</span></TableCell>
+            }
+            <TableCell align="center">
+              <Checkbox color="primary" type="checkbox" onChange={(() => { dispatch(doneTodo(index)) })} checked={todo.flg}/>
+              <IconButton variant="contained" onClick={(() => { dispatch(deleteTodo(index)) })}>
+                <Delete/>
+              </IconButton>
+            </TableCell>
+          </TableRow>
+        )}
+        </TableBody>
+        </Table>
+        </TableContainer>
+        }
+        <Grid container justify="center" alignItems="center">
+          <Grid item md={3}>
+            <TextField variant="outlined" label="todoを入れてください" type="text" onChange={((e)=>{setVal(e.target.value)})} value={ val }/>
+          </Grid>
+          <Grid item md={1}>
+            <AddCircle style={{fontSize:30}} color="primary" onClick={(() => { dispatch(addToTodoList(val)) })}></AddCircle>
+          </Grid>
+        </Grid>
+    </Container>
   );  
 }
 
