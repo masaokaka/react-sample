@@ -13,10 +13,11 @@ export default(state = initialState, action) => {
             todos: action.todos,
             };
         case ADDTOTODOLIST:
+            action.todo.id = state.todos.length+1
             let data = {
             todos: [
                 ...state.todos,
-                { id: state.todos.length, value: action.text, flg: false },
+                action.todo,
             ],
             };
             localStorage.setItem('data',JSON.stringify(data.todos))

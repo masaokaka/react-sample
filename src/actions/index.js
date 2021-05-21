@@ -3,9 +3,10 @@ export const ADDTOTODOLIST = 'addToTodoList'
 export const DONETODO = 'doneTodo'
 export const DELETETODO = 'deleteTodo'
 
-export const addToTodoList = (value) => ({
+export const addToTodoList = (todo) => ({
         type: ADDTOTODOLIST,
-        text:value
+        //オブジェクトわたしてる
+        todo:todo
 })
 export const doneTodo = (index) => ({
         type: DONETODO,
@@ -15,7 +16,7 @@ export const deleteTodo = (index) => ({
         type: DELETETODO,
         index:index
 })
-export const fetchData = (todos) => ({
+export const fetchData = (data) => ({
         type: FETCHDATA,
-        todos:todos
+        todos:data
 })
