@@ -1,3 +1,11 @@
+import React from "react";
+import {Showpath} from './Showpath'
+
 export const Login = ()=>{
-    return <h1>ログイン画面です</h1>;
+    return (
+    <React.Fragment>
+        <h1>ログイン画面です</h1>
+        <Showpath/>
+    </React.Fragment>
+    )
 }
