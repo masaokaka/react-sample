@@ -2,8 +2,7 @@ import React,{ useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom'
 import { addToTodoList } from '../actions';
-import { InputLabel,Input} from '@material-ui/core'
-import { AddCircle } from '@material-ui/icons';
+import { InputLabel,Input,Button } from '@material-ui/core'
 
 export const AddTodo = () => {
     const dispatch = useDispatch()
@@ -49,7 +48,7 @@ export const AddTodo = () => {
             <InputLabel htmlFor="startdate">開始日</InputLabel>
             <Input id="startdate" type="date" onChange={((e)=>setStartdate(e.target.value))}/>
         </div>
-        <AddCircle onClick={addTodo}></AddCircle>
+        <Button onClick={addTodo} variant="contained" color="primary">追加</Button>
     </React.Fragment>
   );  
 }

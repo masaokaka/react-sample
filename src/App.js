@@ -1,17 +1,17 @@
 import React from 'react'
-import { Container} from '@material-ui/core'
+import { Container } from '@material-ui/core'
 import {BrowserRouter as Router,Route,Switch} from 'react-router-dom'
 import {Header} from './component/Header'
 import {Footer} from './component/Footer'
 import {Todos} from './component/Todos'
 import {TodoInfo} from './component/TodoInfo'
-import {AddTodo} from './component/AddTodo.js'
+import { AddTodo } from './component/AddTodo.js'
 
 const App = () => {
   return (
     <React.Fragment>
       <Header/>
-      <Container maxWidth="Md">
+      <Container maxWidth="md">
         <Router>
           <Switch>
             <Route path='/' exact component={Todos}/>

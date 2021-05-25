@@ -1,22 +1,19 @@
 import React,{ useEffect,useState } from 'react';
 import { useParams,Link } from 'react-router-dom';
 import { Table,TableBody,TableCell,TableContainer,TableHead,TableRow} from '@material-ui/core'
+import GetLocalData from './GetLocalData';
 
 export const TodoInfo = () => {
   const {id} = useParams()
   const [todoInfo,setTodoInfo] = useState([]);
 
-  //マウント時に実行
   useEffect(() => {
-    if (localStorage.data) {
-      let data = localStorage.getItem('data')
-      data = JSON.parse(data)
-      let item = data.filter((todo)=>{
-        return todo.id === parseInt(id)
-      })
-      setTodoInfo(item[0])
-    }
-  },[id])
+    let data = GetLocalData()
+    let index = data.findIndex(el=>el.id===id)
+    let item = data.splice(index, 1)
+    setTodoInfo(item[0])
+  }, [id])
+  
   return (
     <TableContainer>
       <h1>ToDo詳細情報</h1>
